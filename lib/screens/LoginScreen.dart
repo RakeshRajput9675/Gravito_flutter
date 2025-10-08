@@ -147,7 +147,7 @@ class _LoginScreenState extends State<LoginScreen> {
 }
 Container ButtonWidget(String text, VoidCallback onPressed) {
   return Container(
-    width: 56,
+    height: 56,
     decoration: BoxDecoration(
       boxShadow: [
         BoxShadow(

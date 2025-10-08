@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:gravito/screens/LoginScreen.dart';
+import 'package:gravito/screens/NewPasswordScreen.dart';
 
 class OtpScreen extends StatefulWidget {
   const OtpScreen({super.key});
@@ -33,12 +36,7 @@ class _OtpScreenState extends State<OtpScreen> {
                     alignment: Alignment.centerLeft,
                     child: IconButton(
                       onPressed: () {
-                        Navigator.of(context).pop();
-                        Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (context) => LoginScreen(),
-                          ),
-                        );
+                        Get.back();
                       },
                       icon: const Icon(Icons.arrow_back_ios_new_outlined),
                     ),
@@ -83,7 +81,9 @@ class _OtpScreenState extends State<OtpScreen> {
                 fontSize: 16
               ),)),
               const SizedBox(height: 40),
-              ButtonWidget("Verify", () {}),
+              ButtonWidget("Verify", () {
+                Get.to(NewpasswordScreen());
+              }),
             ],
           ),
         ),
