@@ -109,7 +109,9 @@ class _NewpasswordScreenState extends State<NewpasswordScreen> {
                     ),
                   ),
                   const SizedBox(height: 50),
-                  ButtonWidget("Verify", () {}),
+                  ButtonWidget("Submit", () {
+                    Get.offAll(() => LoginScreen());
+                  }),
               ]
             )
         )
