@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:gravito/screens/HomeScreen.dart';
+import 'package:gravito/screens/DashBoardScreen.dart';
 import 'package:gravito/screens/OtpScreen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -141,7 +141,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               const SizedBox(height: 20),
               ButtonWidget("Login", () {
-                Get.to(Homescreen());
+                Get.to(DashBoardScreen());
               }),
             ],
           ),
