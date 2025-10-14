@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'HomeScreen.dart';
+
 class DashBoardScreen extends StatefulWidget {
   const DashBoardScreen({super.key});
 
@@ -8,14 +10,15 @@ class DashBoardScreen extends StatefulWidget {
 }
 
 class _DashBoardScreenState extends State<DashBoardScreen> {
+  var list = [
+    HomeScreen(),
+  ];
   int currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Text('Page $currentIndex'),
-      ),
+      body:list[currentIndex],
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (int index) {
           setState(() {
