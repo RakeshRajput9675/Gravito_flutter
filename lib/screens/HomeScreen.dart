@@ -192,19 +192,33 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   )),
                   const SizedBox(width: 10),
-                  Expanded(child: Container(
-                    decoration: BoxDecoration(
+                  Expanded(
+                    child: Container(
+                      decoration: BoxDecoration(
                         color: Colors.red,
                         borderRadius: BorderRadius.circular(12),
-                        border: BoxBorder.all(color: Colors.red)
+                      ),
+                      child: Center(
+                        child: TextButton(
+                          onPressed: () {},
+                          style: TextButton.styleFrom(
+                            backgroundColor: Colors.red,
+                            foregroundColor: Colors.white,
+                            overlayColor: Colors.transparent,
+                            shadowColor: Colors.transparent,
+                          ),
+                          child: const Text(
+                            "Transfer Table",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
-                    child: Center(
-                      child: TextButton(onPressed: () {}, child: Text(
-                          "Transfer Table", style: TextStyle(
-                        color: Colors.white,
-                      ),)),
-                    ),
-                  ))
+                  )
+
                 ],
               )
             ],
