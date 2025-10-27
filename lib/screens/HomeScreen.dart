@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'LoginScreen.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -9,6 +11,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int? selectedIndex;
+  final TextEditingController _specialRequestController = TextEditingController();
+
   Set<int> selectedIndexes = {};
   var list = [
     "Table No-101",
@@ -59,12 +63,11 @@ class _HomeScreenState extends State<HomeScreen> {
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(16), // add padding for spacing
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
 
               Row(
                 children: [
-
                   Expanded(
                     child: Container(
                       padding: const EdgeInsets.all(16),
@@ -142,7 +145,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       borderRadius: BorderRadius.circular(10),
                       onTap: () {
                         setState(() {
-                          // ✅ Add to selected list only if not already selected
                           if (isSelected) {
                             selectedIndexes.remove(index);
                           } else {
@@ -185,10 +187,16 @@ class _HomeScreenState extends State<HomeScreen> {
                         border: BoxBorder.all(color: Colors.red)
                     ),
                     child: Center(
-                      child: TextButton(onPressed: () {}, child: Text(
+                      child: TextButton(onPressed: () {},
+                        style: TextButton.styleFrom(
+                          backgroundColor: Colors.transparent,
+                          overlayColor: Colors.transparent,
+                          shadowColor: Colors.transparent,
+                        ), child: Text(
                           "Manual Order", style: TextStyle(
-                        color: Colors.red,
-                      ),)),
+                            color: Colors.red
+                        ),),
+                      ),
                     ),
                   )),
                   const SizedBox(width: 10),
@@ -203,7 +211,6 @@ class _HomeScreenState extends State<HomeScreen> {
                           onPressed: () {},
                           style: TextButton.styleFrom(
                             backgroundColor: Colors.red,
-                            foregroundColor: Colors.white,
                             overlayColor: Colors.transparent,
                             shadowColor: Colors.transparent,
                           ),
@@ -220,6 +227,88 @@ class _HomeScreenState extends State<HomeScreen> {
                   )
 
                 ],
+              ),
+              const SizedBox(height: 30),
+              Text("Pending Items", style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold
+              ),),
+              ListView.builder(
+                itemCount: 2,
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  return itemWidget();
+                },
+              ),
+
+              const SizedBox(height: 30),
+              Text("Special Requests", style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold
+              )),
+              const SizedBox(height: 10),
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.blueGrey,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 10, horizontal: 10),
+                  child: TextField(
+                    controller: _specialRequestController,
+                    textAlign: TextAlign.left,
+                    maxLines: null,
+                    decoration: const InputDecoration(
+                      isDense: true,
+                      contentPadding: EdgeInsets.zero,
+                      // ✅ removes extra space inside
+                      border: InputBorder.none,
+                      hintText: "Enter your special request",
+                      hintStyle: TextStyle(color: Colors.grey),
+                    ),
+                    style: TextStyle(fontSize: 12),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 30),
+              Text("Served Items", style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold
+              )),
+              const SizedBox(height: 10),
+              ListView.builder(itemBuilder: (context, index) {
+                return itemWidgetWithoutButton();
+              },
+                itemCount: 2,
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+              ),
+              const SizedBox(height: 30),
+              Text("Cancel Items", style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold
+              )),
+              const SizedBox(height: 10),
+              ListView.builder(itemBuilder: (context, index) {
+                return itemWidgetWithoutButton();
+              },
+                itemCount: 2,
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+              ),
+              const SizedBox(height: 30),
+              ButtonWidget("View Bill Details", () {}),
+              const SizedBox(height: 30),
+              Center(
+                child: Text("Cancel Order", style: TextStyle(
+                    color: Colors.red
+                ),),
               )
             ],
           ),
@@ -227,4 +316,227 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+}
+
+Widget itemWidgetWithoutButton() {
+  return Card(
+    shadowColor: Colors.black12,
+    color: Colors.white,
+    elevation: 2,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(12),
+    ),
+    child: Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Image.asset(
+                  'asset/images/img.png',
+                  width: 80,
+                  height: 80,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Vegetables Noodle's",
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black87,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    const Text(
+                      "Lorem ipsum dolor sit amet, consectetur adipi.",
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.black54,
+                      ),
+                    ),
+                    Row(
+                      spacing: 0,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          "2 × AED 100",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black87,
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () {},
+                          style: TextButton.styleFrom(
+                            foregroundColor: Colors.green,
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            minimumSize: Size.zero,
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: const [
+                              Text("2 Add-Ons"),
+                              SizedBox(width: 6),
+                              Icon(Icons.add_circle_outline, size: 18),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+Widget itemWidget() {
+  return Card(
+    shadowColor: Colors.black12,
+    color: Colors.white,
+    elevation: 2,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(12),
+    ),
+    child: Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Image.asset(
+                  'asset/images/img.png',
+                  width: 80,
+                  height: 80,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Vegetables Noodle's",
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black87,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    const Text(
+                      "Lorem ipsum dolor sit amet, consectetur adipi.",
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.black54,
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          "2 × AED 100",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black87,
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () {},
+                          style: TextButton.styleFrom(
+                            foregroundColor: Colors.green,
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            minimumSize: Size.zero,
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: const [
+                              Text("2 Add-Ons"),
+                              SizedBox(width: 6),
+                              Icon(Icons.add_circle_outline, size: 18),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Row(
+            children: [
+              Expanded(child: Container(
+                height: 36,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12),
+                    border: BoxBorder.all(color: Colors.green)
+                ),
+                child: Center(
+                  child: TextButton(onPressed: () {},
+                    style: TextButton.styleFrom(
+                      backgroundColor: Colors.transparent,
+                      overlayColor: Colors.transparent,
+                      shadowColor: Colors.transparent,
+                    ), child: Text(
+                      "Cancel Item", style: TextStyle(
+                        color: Colors.green
+                    ),),
+                  ),
+                ),
+              )),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Container(
+                  height: 36,
+                  decoration: BoxDecoration(
+                    color: Colors.green,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Center(
+                    child: TextButton(
+                      onPressed: () {},
+                      style: TextButton.styleFrom(
+                        backgroundColor: Colors.green,
+                        overlayColor: Colors.transparent,
+                        shadowColor: Colors.transparent,
+                      ),
+                      child: const Text(
+                        "Served",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
+        ],
+      ),
+    ),
+  );
 }
