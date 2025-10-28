@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'LoginScreen.dart';
+import 'ManualOrderScreen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -41,9 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
         title: const Text(
           "Home",
           style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-            color: Colors.black87,
+            color: Colors.black, fontSize: 16, fontWeight: FontWeight.w600,
           ),
         ),
         centerTitle: true,
@@ -140,7 +140,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   itemCount: list.length,
                   itemBuilder: (context, index) {
                     bool isSelected = selectedIndexes.contains(index);
-
                     return InkWell(
                       borderRadius: BorderRadius.circular(10),
                       onTap: () {
@@ -187,7 +186,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         border: BoxBorder.all(color: Colors.red)
                     ),
                     child: Center(
-                      child: TextButton(onPressed: () {},
+                      child: TextButton(onPressed: () {
+                        Get.to(ManualOrderScreen());
+                      },
                         style: TextButton.styleFrom(
                           backgroundColor: Colors.transparent,
                           overlayColor: Colors.transparent,
