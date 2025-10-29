@@ -68,6 +68,7 @@ flutter:
      - asset/images/logo.png
      - asset/images/image1.png
      - asset/images/img.png
+     - asset/images/dialog.png
 
   #   - images/a_dot_ham.jpeg
 

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:gravito/screens/NewPasswordScreen.dart';
+import 'package:gravito/screens/TransferTableScreen.dart';
 
 import 'LoginScreen.dart';
 import 'ManualOrderScreen.dart';
@@ -12,6 +14,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  bool isSelected = false;
+  bool isNotificationOn = false;
+
   int? selectedIndex;
   final TextEditingController _specialRequestController = TextEditingController();
 
@@ -33,7 +38,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // ✅ This covers the entire screen (including empty areas)
       backgroundColor: const Color(0xfff5f5f5),
 
       appBar: AppBar(
@@ -53,7 +57,191 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
 
-      drawer: const Drawer(),
+      drawer: Drawer(
+        backgroundColor: Colors.white,
+        width: double.infinity,
+        shape: const RoundedRectangleBorder(
+        ),
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 30, horizontal: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+
+            children: [
+              IconButton(
+                  onPressed: () {},
+                  icon: Icon(Icons.arrow_back_ios_new_rounded)),
+              const SizedBox(height: 10),
+              Center(
+                child: Image.asset("asset/images/logo.png",),
+              ),
+              const SizedBox(height: 25),
+              GestureDetector(
+                onTap: () {
+                  Get.to(NewpasswordScreen());
+                },
+                child: Row(
+                  children: [
+                    Icon(Icons.lock_open, color: Colors.green, size: 24,),
+                    const SizedBox(width: 20),
+                    Expanded(child: Text("Change Password", style: TextStyle(
+                        fontSize: 14
+                    ))),
+                    const SizedBox(width: 10),
+                    Icon(
+                      Icons.arrow_forward_ios, color: Colors.grey, size: 24,),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 20),
+              GestureDetector(
+                onTap: () {
+                  Get.to(NewpasswordScreen());
+                },
+                child: Row(
+                  children: [
+                    Icon(Icons.contact_phone_outlined, color: Colors.green,
+                      size: 24,),
+                    const SizedBox(width: 20),
+                    Expanded(child: Text("Contact us", style: TextStyle(
+                        fontSize: 14
+                    ))),
+                    const SizedBox(width: 10),
+                    Icon(
+                      Icons.arrow_forward_ios, color: Colors.grey, size: 24,),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 20),
+              GestureDetector(
+                onTap: () {
+                  Get.to(NewpasswordScreen());
+                },
+                child: Row(
+                  children: [
+                    Icon(Icons.question_answer_outlined, color: Colors.green,
+                      size: 24,),
+                    const SizedBox(width: 20),
+                    Expanded(child: Text("FAQs", style: TextStyle(
+                        fontSize: 14
+                    ))),
+                    const SizedBox(width: 10),
+                    Icon(
+                      Icons.arrow_forward_ios, color: Colors.grey, size: 24,),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 20),
+              GestureDetector(
+                onTap: () {
+                  Get.to(NewpasswordScreen());
+                },
+                child: Row(
+                  children: [
+                    Icon(Icons.interpreter_mode_sharp, color: Colors.green,
+                      size: 24,),
+                    const SizedBox(width: 20),
+                    Expanded(child: Text("Terms & Conditions", style: TextStyle(
+                        fontSize: 14
+                    ))),
+                    const SizedBox(width: 10),
+                    Icon(
+                      Icons.arrow_forward_ios, color: Colors.grey, size: 24,),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 20),
+              GestureDetector(
+                onTap: () {
+                  Get.to(NewpasswordScreen());
+                },
+                child: Row(
+                  children: [
+                    Icon(Icons.privacy_tip_outlined, color: Colors.green,
+                      size: 24,),
+                    const SizedBox(width: 20),
+                    Expanded(child: Text("Privacy Policy", style: TextStyle(
+                        fontSize: 14
+                    ))),
+                    const SizedBox(width: 10),
+                    Icon(
+                      Icons.arrow_forward_ios, color: Colors.grey, size: 24,),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 20),
+
+              GestureDetector(
+                onTap: () {
+                },
+                child: Row(
+                  children: [
+                    const Icon(Icons.notifications_active_outlined,
+                        color: Colors.green, size: 24),
+                    const SizedBox(width: 20),
+                    const Expanded(
+                      child: Text(
+                        "Notification",
+                        style: TextStyle(fontSize: 14),
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Switch(
+                      value: isNotificationOn,
+                      inactiveTrackColor: Colors.grey,
+                      inactiveThumbColor: Colors.white,
+                      activeColor: Colors.green,
+                      onChanged: (value) {
+                        setState(() {
+                          isNotificationOn = value;
+                        });
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 20),
+              GestureDetector(
+                onTap: () {
+                  Get.to(NewpasswordScreen());
+                },
+                child: Row(
+                  children: [
+                    Icon(Icons.delete, color: Colors.green,
+                      size: 24,),
+                    const SizedBox(width: 20),
+                    Expanded(child: Text("Delete Account", style: TextStyle(
+                        fontSize: 14
+                    ))),
+                    const SizedBox(width: 10),
+                    Icon(
+                      Icons.arrow_forward_ios, color: Colors.grey, size: 24,),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 20),
+              GestureDetector(
+                onTap: () {
+                  Get.to(NewpasswordScreen());
+                },
+                child: Row(
+                  children: [
+                    Icon(Icons.logout_rounded, color: Colors.green,
+                      size: 24,),
+                    const SizedBox(width: 20),
+                    Expanded(child: Text("Logout", style: TextStyle(
+                        fontSize: 14
+                    ))),
+                    const SizedBox(width: 10),
+                    Icon(
+                      Icons.arrow_forward_ios, color: Colors.grey, size: 24,),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
 
       body: Container(
         width: double.infinity,
@@ -209,7 +397,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       child: Center(
                         child: TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Get.to(Transfertablescreen());
+                          },
                           style: TextButton.styleFrom(
                             backgroundColor: Colors.red,
                             overlayColor: Colors.transparent,

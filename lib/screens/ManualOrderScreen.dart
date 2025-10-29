@@ -275,7 +275,65 @@ class _ManualOrderScreenState extends State<ManualOrderScreen> {
                                       style: TextStyle(fontSize: 16),
                                     ),
                                     const SizedBox(width: 20),
-                                    Expanded(child: ButtonWidget("Add", () {})),
+                                    Expanded(
+                                      child: ButtonWidget("Add", () {
+                                        showModalBottomSheet(
+                                          context: context,
+                                          isScrollControlled: true,
+                                          backgroundColor: Colors.white,
+                                          shape: const RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(20),
+                                              topRight: Radius.circular(20),
+                                            ),
+                                          ),
+                                          builder: (BuildContext context) {
+                                            return SizedBox(
+                                              height: 300,
+                                              width: double.infinity,
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(left: 20, right: 20, top: 0, bottom: 25),
+                                                child: Column(
+                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: const [
+                                                    SizedBox(height: 16),
+                                                   Row(
+                                                     children: [
+                                                      Expanded(child:  Text(
+                                                        "Item name",
+                                                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                                                      ),),
+                                                       Icon(Icons.ac_unit_outlined)
+                                                     ],
+                                                   ),
+                                                    SizedBox(height: 12),
+                                                    Divider(height: 1, color: Colors.grey),
+                                                    SizedBox(height: 15,),
+                                                    Text("Add On", textAlign: TextAlign.start, style: TextStyle(
+                                                      fontSize: 16,
+                                                      fontWeight: FontWeight.w700,
+                                                    ),),
+                                                    SizedBox(height: 15,),
+                                                    Card(
+                                                      child: Padding(padding: EdgeInsets.all(10),
+                                                        child: Card(
+                                                          child: ListTile(
+
+                                                          ),
+
+                                                        ),
+                                                     ),
+                                                    )
+
+                                                  ],
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        );
+                                      }),
+                                    ),
                                   ],
                                 ),
                               ],
