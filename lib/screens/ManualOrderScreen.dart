@@ -11,6 +11,8 @@ class ManualOrderScreen extends StatefulWidget {
 class _ManualOrderScreenState extends State<ManualOrderScreen> {
   final TextEditingController _searchController = TextEditingController();
   int selectedIndex = 0;
+  bool isChecked = false;
+
 
   @override
   Widget build(BuildContext context) {
@@ -280,6 +282,7 @@ class _ManualOrderScreenState extends State<ManualOrderScreen> {
                                         showModalBottomSheet(
                                           context: context,
                                           isScrollControlled: true,
+                                          // ✅ allows flexible height
                                           backgroundColor: Colors.white,
                                           shape: const RoundedRectangleBorder(
                                             borderRadius: BorderRadius.only(
@@ -288,47 +291,138 @@ class _ManualOrderScreenState extends State<ManualOrderScreen> {
                                             ),
                                           ),
                                           builder: (BuildContext context) {
-                                            return SizedBox(
-                                              height: 300,
-                                              width: double.infinity,
-                                              child: Padding(
-                                                padding: const EdgeInsets.only(left: 20, right: 20, top: 0, bottom: 25),
-                                                child: Column(
-                                                  mainAxisAlignment: MainAxisAlignment.start,
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: const [
-                                                    SizedBox(height: 16),
-                                                   Row(
-                                                     children: [
-                                                      Expanded(child:  Text(
-                                                        "Item name",
-                                                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                                                      ),),
-                                                       Icon(Icons.ac_unit_outlined)
-                                                     ],
-                                                   ),
-                                                    SizedBox(height: 12),
-                                                    Divider(height: 1, color: Colors.grey),
-                                                    SizedBox(height: 15,),
-                                                    Text("Add On", textAlign: TextAlign.start, style: TextStyle(
-                                                      fontSize: 16,
-                                                      fontWeight: FontWeight.w700,
-                                                    ),),
-                                                    SizedBox(height: 15,),
-                                                    Card(
-                                                      child: Padding(padding: EdgeInsets.all(10),
-                                                        child: Card(
-                                                          child: ListTile(
+                                            return DraggableScrollableSheet(
+                                              // ✅ enables smooth drag + flexible height
+                                              initialChildSize: 0.5,
+                                              // starts at half screen
+                                              minChildSize: 0.3,
+                                              maxChildSize: 0.9,
+                                              expand: false,
+                                              builder: (context,
+                                                  scrollController) {
+                                                return Padding(
+                                                  padding: const EdgeInsets
+                                                      .only(left: 20,
+                                                      right: 20,
+                                                      bottom: 25),
+                                                  child: SingleChildScrollView(
+                                                    controller: scrollController,
+                                                    // ✅ connect to sheet scroll
+                                                    child: Column(
+                                                      crossAxisAlignment: CrossAxisAlignment
+                                                          .start,
+                                                      children: [
+                                                        const SizedBox(
+                                                            height: 16),
 
-                                                          ),
-
+                                                        // 🔹 Header Row
+                                                        const Row(
+                                                          children: [
+                                                            Expanded(
+                                                              child: Text(
+                                                                "Item name",
+                                                                style: TextStyle(
+                                                                  fontSize: 18,
+                                                                  fontWeight: FontWeight
+                                                                      .bold,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            Icon(Icons
+                                                                .ac_unit_outlined),
+                                                          ],
                                                         ),
-                                                     ),
-                                                    )
 
-                                                  ],
-                                                ),
-                                              ),
+                                                        const SizedBox(
+                                                            height: 12),
+                                                        const Divider(height: 1,
+                                                            color: Colors.grey),
+                                                        const SizedBox(
+                                                            height: 15),
+
+                                                        // 🔹 Add On Title
+                                                        const Text(
+                                                          "Add On",
+                                                          style: TextStyle(
+                                                            fontSize: 16,
+                                                            fontWeight: FontWeight
+                                                                .w700,
+                                                          ),
+                                                        ),
+
+                                                        const SizedBox(
+                                                            height: 15),
+
+                                                        // 🔹 Add On List
+                                                        Card(
+                                                          elevation: 2,
+                                                          child: Padding(
+                                                            padding: const EdgeInsets
+                                                                .all(10),
+                                                            child: ListView
+                                                                .builder(
+
+                                                              controller: scrollController,
+                                                              // ✅ same scroll controller
+                                                              itemCount: 20,
+                                                              // Example: larger list
+                                                              shrinkWrap: true,
+                                                              itemBuilder: (
+                                                                  context,
+                                                                  index) {
+                                                                return Padding(
+                                                                  padding: const EdgeInsets
+                                                                      .symmetric(
+                                                                      vertical: 8),
+                                                                  child: Row(
+                                                                    children: [
+                                                                      ClipRRect(
+                                                                        borderRadius: BorderRadius
+                                                                            .circular(
+                                                                            10),
+                                                                        child: Image
+                                                                            .asset(
+                                                                          "asset/images/img.png",
+                                                                          height: 40,
+                                                                          width: 40,
+                                                                          fit: BoxFit
+                                                                              .cover,
+                                                                        ),
+                                                                      ),
+                                                                      const SizedBox(
+                                                                          width: 10),
+                                                                      Expanded(
+                                                                        child: Text(
+                                                                          "Data $index",
+                                                                          style: const TextStyle(
+                                                                              fontSize: 16),
+                                                                        ),
+                                                                      ),
+                                                                      const SizedBox(
+                                                                        width: 10,),
+                                                                      Checkbox(
+                                                                        value: isChecked,
+                                                                        activeColor: Colors.green,
+                                                                        onChanged: (value) {
+                                                                          setState(() {
+                                                                            isChecked = value!;
+                                                                          });
+                                                                        },
+                                                                      )
+
+
+                                                                    ],
+                                                                  ),
+                                                                );
+                                                              },
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                );
+                                              },
                                             );
                                           },
                                         );
