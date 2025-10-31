@@ -69,6 +69,9 @@ flutter:
      - asset/images/image1.png
      - asset/images/img.png
      - asset/images/dialog.png
+     - asset/images/minus.png
+     - asset/images/plus.png
+
 
   #   - images/a_dot_ham.jpeg
 

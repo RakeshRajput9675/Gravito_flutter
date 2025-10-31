@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:gravito/screens/LoginScreen.dart';
+import 'package:gravito/screens/PlaceOrderScreen.dart';
 
 class ManualOrderScreen extends StatefulWidget {
   const ManualOrderScreen({super.key});
@@ -12,6 +15,7 @@ class _ManualOrderScreenState extends State<ManualOrderScreen> {
   final TextEditingController _searchController = TextEditingController();
   int selectedIndex = 0;
   bool isChecked = false;
+  Set<int> selectedItems = {};
 
 
   @override
@@ -292,135 +296,148 @@ class _ManualOrderScreenState extends State<ManualOrderScreen> {
                                           ),
                                           builder: (BuildContext context) {
                                             return DraggableScrollableSheet(
-                                              // ✅ enables smooth drag + flexible height
-                                              initialChildSize: 0.5,
-                                              // starts at half screen
                                               minChildSize: 0.3,
-                                              maxChildSize: 0.9,
+                                              maxChildSize: 0.5,
                                               expand: false,
                                               builder: (context,
                                                   scrollController) {
-                                                return Padding(
-                                                  padding: const EdgeInsets
-                                                      .only(left: 20,
-                                                      right: 20,
-                                                      bottom: 25),
-                                                  child: SingleChildScrollView(
-                                                    controller: scrollController,
-                                                    // ✅ connect to sheet scroll
-                                                    child: Column(
-                                                      crossAxisAlignment: CrossAxisAlignment
-                                                          .start,
-                                                      children: [
-                                                        const SizedBox(
-                                                            height: 16),
+                                                return StatefulBuilder(
+                                                  builder: (context,
+                                                      setModalState) {
+                                                    return Padding(
+                                                      padding: const EdgeInsets
+                                                          .only(left: 20,
+                                                          right: 20,
+                                                          bottom: 25),
+                                                      child: ListView(
+                                                        controller: scrollController,
+                                                        children: [
+                                                          const SizedBox(
+                                                              height: 16),
+                                                          const Row(
+                                                            children: [
+                                                              Expanded(
+                                                                child: Text(
+                                                                  "Item name",
+                                                                  style: TextStyle(
+                                                                    fontSize: 18,
+                                                                    fontWeight: FontWeight
+                                                                        .bold,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              Icon(Icons
+                                                                  .ac_unit_outlined),
+                                                            ],
+                                                          ),
+                                                          const SizedBox(
+                                                              height: 12),
+                                                          const Divider(
+                                                              height: 1,
+                                                              color: Colors
+                                                                  .grey),
+                                                          const SizedBox(
+                                                              height: 15),
+                                                          const Text(
+                                                            "Add On",
+                                                            style: TextStyle(
+                                                              fontSize: 16,
+                                                              fontWeight: FontWeight
+                                                                  .w700,
+                                                            ),
+                                                          ),
+                                                          const SizedBox(
+                                                              height: 15),
 
-                                                        // 🔹 Header Row
-                                                        const Row(
-                                                          children: [
-                                                            Expanded(
-                                                              child: Text(
-                                                                "Item name",
-                                                                style: TextStyle(
-                                                                  fontSize: 18,
-                                                                  fontWeight: FontWeight
-                                                                      .bold,
+                                                          // 🔹 Dynamically sized card (auto height, scrolls after a point)
+                                                          Card(
+                                                            color: Colors.white,
+                                                            elevation: 2,
+                                                            child: ConstrainedBox(
+                                                              constraints: const BoxConstraints(
+                                                                maxHeight: 250, // 🔹 grows naturally up to 250, then scrolls
+                                                              ),
+                                                              child: Padding(
+                                                                padding: const EdgeInsets
+                                                                    .all(10),
+                                                                child: ListView
+                                                                    .builder(
+                                                                  itemCount: 20,
+                                                                  shrinkWrap: true,
+                                                                  itemBuilder: (
+                                                                      context,
+                                                                      index) {
+                                                                    final isChecked = selectedItems
+                                                                        .contains(
+                                                                        index);
+                                                                    return Padding(
+                                                                      padding: const EdgeInsets
+                                                                          .symmetric(
+                                                                          vertical: 8),
+                                                                      child: Row(
+                                                                        children: [
+                                                                          ClipRRect(
+                                                                            borderRadius: BorderRadius
+                                                                                .circular(
+                                                                                10),
+                                                                            child: Image
+                                                                                .asset(
+                                                                              "asset/images/img.png",
+                                                                              height: 40,
+                                                                              width: 40,
+                                                                              fit: BoxFit
+                                                                                  .cover,
+                                                                            ),
+                                                                          ),
+                                                                          const SizedBox(
+                                                                              width: 10),
+                                                                          Expanded(
+                                                                            child: Text(
+                                                                              "Data $index",
+                                                                              style: const TextStyle(
+                                                                                  fontSize: 16),
+                                                                            ),
+                                                                          ),
+                                                                          Checkbox(
+                                                                            value: isChecked,
+                                                                            activeColor: Colors
+                                                                                .green,
+                                                                            onChanged: (
+                                                                                value) {
+                                                                              setModalState(() {
+                                                                                if (value ==
+                                                                                    true) {
+                                                                                  selectedItems
+                                                                                      .add(
+                                                                                      index);
+                                                                                } else {
+                                                                                  selectedItems
+                                                                                      .remove(
+                                                                                      index);
+                                                                                }
+                                                                              });
+                                                                            },
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    );
+                                                                  },
                                                                 ),
                                                               ),
                                                             ),
-                                                            Icon(Icons
-                                                                .ac_unit_outlined),
-                                                          ],
-                                                        ),
-
-                                                        const SizedBox(
-                                                            height: 12),
-                                                        const Divider(height: 1,
-                                                            color: Colors.grey),
-                                                        const SizedBox(
-                                                            height: 15),
-
-                                                        // 🔹 Add On Title
-                                                        const Text(
-                                                          "Add On",
-                                                          style: TextStyle(
-                                                            fontSize: 16,
-                                                            fontWeight: FontWeight
-                                                                .w700,
                                                           ),
-                                                        ),
 
-                                                        const SizedBox(
-                                                            height: 15),
-
-                                                        // 🔹 Add On List
-                                                        Card(
-                                                          elevation: 2,
-                                                          child: Padding(
-                                                            padding: const EdgeInsets
-                                                                .all(10),
-                                                            child: ListView
-                                                                .builder(
-
-                                                              controller: scrollController,
-                                                              // ✅ same scroll controller
-                                                              itemCount: 20,
-                                                              // Example: larger list
-                                                              shrinkWrap: true,
-                                                              itemBuilder: (
-                                                                  context,
-                                                                  index) {
-                                                                return Padding(
-                                                                  padding: const EdgeInsets
-                                                                      .symmetric(
-                                                                      vertical: 8),
-                                                                  child: Row(
-                                                                    children: [
-                                                                      ClipRRect(
-                                                                        borderRadius: BorderRadius
-                                                                            .circular(
-                                                                            10),
-                                                                        child: Image
-                                                                            .asset(
-                                                                          "asset/images/img.png",
-                                                                          height: 40,
-                                                                          width: 40,
-                                                                          fit: BoxFit
-                                                                              .cover,
-                                                                        ),
-                                                                      ),
-                                                                      const SizedBox(
-                                                                          width: 10),
-                                                                      Expanded(
-                                                                        child: Text(
-                                                                          "Data $index",
-                                                                          style: const TextStyle(
-                                                                              fontSize: 16),
-                                                                        ),
-                                                                      ),
-                                                                      const SizedBox(
-                                                                        width: 10,),
-                                                                      Checkbox(
-                                                                        value: isChecked,
-                                                                        activeColor: Colors.green,
-                                                                        onChanged: (value) {
-                                                                          setState(() {
-                                                                            isChecked = value!;
-                                                                          });
-                                                                        },
-                                                                      )
-
-
-                                                                    ],
-                                                                  ),
-                                                                );
-                                                              },
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
+                                                          const SizedBox(
+                                                              height: 20),
+                                                          ButtonWidget(
+                                                              "View Bill Details", () {
+                                                            Get.to(
+                                                                PlaceOrderScreen());
+                                                          }),
+                                                        ],
+                                                      ),
+                                                    );
+                                                  },
                                                 );
                                               },
                                             );
@@ -436,7 +453,6 @@ class _ManualOrderScreenState extends State<ManualOrderScreen> {
                         ),
                       ),
                     );
-
                   },
                   itemCount: 10,
                   physics: NeverScrollableScrollPhysics(),
