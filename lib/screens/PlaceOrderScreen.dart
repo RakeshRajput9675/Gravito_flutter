@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/route_manager.dart';
+import 'package:gravito/screens/HomeScreen.dart';
+import 'package:gravito/screens/LoginScreen.dart';
+import 'package:gravito/screens/ManualOrderScreen.dart';
 
 class PlaceOrderScreen extends StatefulWidget {
   const PlaceOrderScreen({super.key});
@@ -174,6 +178,99 @@ class _PlaceOrderScreenState extends State<PlaceOrderScreen> {
                     );
                   },
                 ),
+                SizedBox(
+                  width: double.infinity,
+                  child: ButtonWidget("Add Items", () {
+                    Get.to(const ManualOrderScreen());
+                  }),
+                ),
+                const SizedBox(height: 10),
+                Text("Special Request (Optional)", style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.black,
+                ),),
+                const SizedBox(height: 5,),
+                Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(
+                      color: Color(0xff33040404),
+                    ),
+                  ),
+                  child: TextField(
+                    keyboardType: TextInputType.multiline,
+                    maxLines: null,
+                    decoration: InputDecoration(
+                      fillColor: Colors.transparent,
+                      border: InputBorder.none,
+                      hint: Text(
+                        "Write Your Special Request Here", style: TextStyle(
+                        fontSize: 10,
+                        color: Color(0xff666666),
+                      ),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 10),
+                SizedBox(
+                  width: double.infinity,
+                  child: Card(
+                    elevation: 0,
+                    color: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.all(10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Bill Details",
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.black,
+                            ),
+                          ),
+                          ListView.builder(
+                            itemCount: 6,
+                            padding: EdgeInsets.zero,
+                            // <-- THIS removes the sneaky gap
+                            shrinkWrap: true,
+                            // <-- tells it to take only needed height
+                            physics: NeverScrollableScrollPhysics(),
+                            // <-- disables internal scroll
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: EdgeInsets.symmetric(vertical: 4),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment
+                                      .spaceBetween,
+                                  children: const [
+                                    Text("data"),
+                                    Text("data"),
+                                  ],
+                                ),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 10),
+
+                SizedBox(
+                  width: double.infinity,
+                  child: ButtonWidget("Place Order", () {
+                   showCustomSnackBar(context,message: 'Order Placed Successfully');
+                   Get.to(HomeScreen());
+                  }),
+                )
               ],
             ),
           ),
@@ -182,3 +279,73 @@ class _PlaceOrderScreenState extends State<PlaceOrderScreen> {
     );
   }
 }
+
+void showSuccessDialog(
+    BuildContext context, {
+      required String message,
+      String imagePath = "asset/images/dialog.png",
+      Duration autoCloseDuration = const Duration(seconds: 2),
+      Widget? nextScreen, // <-- pass any screen you want to go to
+    }) {
+  showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (BuildContext dialogContext) {
+      Future.delayed(autoCloseDuration, () {
+        if (Navigator.canPop(dialogContext)) {
+          Navigator.pop(dialogContext);
+
+          if (nextScreen != null) {
+            Get.to(nextScreen); // <-- navigate to your chosen screen
+          }
+        }
+      });
+
+      return AlertDialog(
+        backgroundColor: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Image.asset(imagePath, height: 85, width: 85, fit: BoxFit.fill),
+            const SizedBox(height: 16),
+            Text(
+              message,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ],
+        ),
+      );
+    },
+  );
+}
+
+void showCustomSnackBar(
+    BuildContext context, {
+      required String message,
+      Color backgroundColor = Colors.green,
+      Duration duration = const Duration(seconds: 2),
+    }) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      content: Text(message),
+      elevation: 1,
+      duration: duration,
+      backgroundColor: backgroundColor,
+      behavior: SnackBarBehavior.floating,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(10),
+          topRight: Radius.circular(10),
+        ),
+      ),
+    ),
+  );
+}
+
